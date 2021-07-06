@@ -4,7 +4,7 @@ import { join } from 'path';
 import { parse } from '@fast-csv/parse';
 import { Rest } from '@cordis/rest';
 import { makeRestUtils } from '@cordis/util';
-import Collection from "@discordjs/collection"
+import Collection from '@discordjs/collection';
 import type { DiscordSnowflake, ZeppelinLogData } from './typings';
 
 // construct cordis Rest utility to fetch data from Discord API
