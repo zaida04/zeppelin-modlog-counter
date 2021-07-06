@@ -1,5 +1,6 @@
 # Zeppelin Mod Log Counter
 Get an easy and readable counter of all action types your moderators have taken from your `cases.csv` file.
+![Example Image](example-1.png)
 
 ## 📝 How to use
 ```
