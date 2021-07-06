@@ -1,0 +1,62 @@
+{
+  "name": "zepp-data",
+  "author": "Zaid \"Nico\"",
+  "license": "MIT",
+  "version": "1.0.0",
+  "description": "Get an easy and readable counter of all action types your moderators have taken from your `cases.csv` file.",
+  "main": "dist/index.js",
+  "private": true,
+  "scripts": {
+    "start": "node -r dotenv/config dist/index.js",
+    "build": "npx rimraf dist/ && tsc",
+    "dev": "nodemon",
+    "lint": "npx eslint src --ext .js,.ts",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "@types/node": "^16.0.0",
+    "eslint": "^7.30.0",
+    "eslint-config-marine": "^9.0.6",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-config-prettier": "^8.3.0",
+    "nodemon": "^2.0.9",
+    "prettier": "^2.3.2",
+    "rimraf": "^3.0.2"
+  },
+  "dependencies": {
+    "@cordis/rest": "^0.3.0",
+    "@cordis/util": "^0.3.0",
+    "@fast-csv/parse": "^4.3.6",
+    "dotenv": "^10.0.0",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3.5"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended",
+      "prettier"
+    ],
+    "env": {
+      "node": true,
+      "es2020": true
+    },
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    }
+  },
+  "prettier": {
+    "printWidth": 110,
+    "tabWidth": 4,
+    "useTabs": true,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "proseWrap": "always",
+    "endOfLine": "auto"
+  }
+}
