@@ -4,6 +4,7 @@ import { join } from 'path';
 import { parse } from '@fast-csv/parse';
 import { Rest } from '@cordis/rest';
 import { makeRestUtils } from '@cordis/util';
+import Collection from "@discordjs/collection"
 import type { DiscordSnowflake, ZeppelinLogData } from './typings';
 
 // construct cordis Rest utility to fetch data from Discord API
@@ -12,7 +13,7 @@ const discordAPI = makeRestUtils(new Rest(process.env.DISCORD_TOKEN!));
 const caseTypes = ['ban', 'unban', 'note', 'warn', 'kick', 'mute', 'unmute'] as const;
 // transform array of action types into an Object type correlating action to number for the counter.
 type UserToCaseData = { [K in typeof caseTypes[number]]: number };
-type UserCounterMapType = Map<DiscordSnowflake, UserToCaseData>;
+type UserCounterMapType = Collection<DiscordSnowflake, UserToCaseData>;
 
 const parseRow = (userCounterMap: UserCounterMapType, data: ZeppelinLogData): void => {
 	// grab user from counter map, or if it's not there, construct an empty counter object with everything set to 0.
@@ -30,7 +31,7 @@ const parseRow = (userCounterMap: UserCounterMapType, data: ZeppelinLogData): vo
 };
 
 const parseUserToCaseData = async (userCounterMap: UserCounterMapType): Promise<void> => {
-	for (const [userID, value] of userCounterMap.entries()) {
+	for (const [userID, value] of userCounterMap.sort((a, b) => b.ban - a.ban).entries()) {
 		/*
             Only regex taken from: https://github.com/discordjs/discord.js/blob/stable/src/structures/MessageMentions.js#L211
             Licensed under MIT -- https://github.com/discordjs/discord.js
@@ -58,7 +59,7 @@ const parseUserToCaseData = async (userCounterMap: UserCounterMapType): Promise<
 	const casesFile = await readFile(join(baseDir, process.env.CASES_FILE_PATH ?? 'cases.csv'), 'utf-8');
 
 	// counter to keep track of amount of actions performed by user.
-	const userToCase: UserCounterMapType = new Map();
+	const userToCase: UserCounterMapType = new Collection();
 
 	// construct CSV parser
 	const casesStream = parse({ headers: true })
